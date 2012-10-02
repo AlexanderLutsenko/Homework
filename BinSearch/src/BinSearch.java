@@ -3,7 +3,7 @@ import java.util.*;
 public class BinSearch {
 	public static void main(String[] args) {
 		BinSearchTree Tree = new BinSearchTree();
-		System.out.println("Введите элементы дерева: ");
+		System.out.println("Р’РІРµРґРёС‚Рµ СЌР»РµРјРµРЅС‚С‹ РґРµСЂРµРІР°: ");
 		Scanner in = new Scanner(System.in);	
 		String str = in.nextLine();
 		StringTokenizer tokenizer = new StringTokenizer(str);
@@ -12,13 +12,13 @@ public class BinSearch {
 				Tree.addElement(Integer.parseInt(tokenizer.nextToken()));
 			}
 		} catch(Exception e){
-			System.out.println("Ошибка ввода");
+			System.out.println("РћС€РёР±РєР° РІРІРѕРґР°");
 			System.exit(0);
 		}
 		in.close();
 
 		System.out.println(Tree.toLSF());
-		System.out.print("Обход дерева в глубину: ");
+		System.out.print("РћР±С…РѕРґ РґРµСЂРµРІР° РІ РіР»СѓР±РёРЅСѓ: ");
 		for(Integer i : Tree) {
 			System.out.print(i+" ");
 		}		
