@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 public class BinSearchTreeTest {
 
     public BinSearchTreeTest() {
+        tree = new BinSearchTree();
     }
 
     @BeforeClass
@@ -29,6 +30,11 @@ public class BinSearchTreeTest {
 
     @Before
     public void setUp() {
+        tree.addElement(19);
+        tree.addElement(4);
+        tree.addElement(7);
+        tree.addElement(7);
+        tree.addElement(21);
     }
 
     @After
@@ -40,8 +46,12 @@ public class BinSearchTreeTest {
      */
     @Test
     public void testIterator() {
-        BinSearchTree tree = new BinSearchTree();
         BinSearchTree.TreeIterator iter = tree.iterator();
+        assertEquals((int) iter.next(), 19);
+        assertEquals((int) iter.next(), 4);
+        assertEquals((int) iter.next(), 7);
+        assertEquals((int) iter.next(), 7);
+        assertEquals((int) iter.next(), 21);
     }
 
     /**
@@ -49,11 +59,7 @@ public class BinSearchTreeTest {
      */
     @Test
     public void testAddElement() {
-        BinSearchTree tree = new BinSearchTree();
-        assertFalse(tree.findElement(19));
-        tree.addElement(19);
-        tree.addElement(4);
-        tree.addElement(7);
+        assertFalse(tree.findElement(8));
         assertTrue(tree.findElement(19));
     }
 
@@ -63,10 +69,8 @@ public class BinSearchTreeTest {
     @Test
     public void testFindElement() {
         BinSearchTree tree = new BinSearchTree();
-        assertFalse(tree.findElement(19));
         tree.addElement(19);
-        tree.addElement(4);
-        tree.addElement(7);
+        assertFalse(tree.findElement(8));
         assertTrue(tree.findElement(19));
     }
 
@@ -75,12 +79,7 @@ public class BinSearchTreeTest {
      */
     @Test
     public void testToLSF() {
-        BinSearchTree tree = new BinSearchTree();
-        tree.addElement(19);
-        tree.addElement(4);
-        tree.addElement(7);
-        tree.addElement(7);
-        tree.addElement(21);
         assertEquals(tree.toLSF(), "19(4(*,7(7,*)),21)");
     }
+    private BinSearchTree tree;
 }

@@ -1,4 +1,3 @@
-
 public class Stack<E> {
 
     public Stack(E headE) {
@@ -25,14 +24,13 @@ public class Stack<E> {
     }
 
     private class Node {
-
-        private E value;
-        private Node next;
-
         private Node(Node next, E value) {
             this.next = next;
             this.value = value;
         }
+        private E value;
+        private Node next;
+
     }
     private Node head;
 }
