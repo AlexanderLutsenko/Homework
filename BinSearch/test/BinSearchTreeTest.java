@@ -16,8 +16,7 @@ import static org.junit.Assert.*;
  */
 public class BinSearchTreeTest {
 
-    public BinSearchTreeTest() {
-        tree = new BinSearchTree();
+    public BinSearchTreeTest() {       
     }
 
     @BeforeClass
@@ -30,6 +29,7 @@ public class BinSearchTreeTest {
 
     @Before
     public void setUp() {
+        tree = new BinSearchTree();
         tree.addElement(19);
         tree.addElement(4);
         tree.addElement(7);
@@ -46,6 +46,7 @@ public class BinSearchTreeTest {
      */
     @Test
     public void testIterator() {
+        System.out.println("iterator");
         BinSearchTree.TreeIterator iter = tree.iterator();
         assertEquals((int) iter.next(), 19);
         assertEquals((int) iter.next(), 4);
@@ -59,19 +60,11 @@ public class BinSearchTreeTest {
      */
     @Test
     public void testAddElement() {
-        assertFalse(tree.findElement(8));
-        assertTrue(tree.findElement(19));
-    }
-
-    /**
-     * Test of findElement method, of class BinSearchTree.
-     */
-    @Test
-    public void testFindElement() {
-        BinSearchTree tree = new BinSearchTree();
-        tree.addElement(19);
-        assertFalse(tree.findElement(8));
-        assertTrue(tree.findElement(19));
+        System.out.println("addElement");
+        BinSearchTree bstree = new BinSearchTree();
+        assertFalse(bstree.findElement(8));
+        bstree.addElement(8);
+        assertTrue(bstree.findElement(8));
     }
 
     /**
@@ -79,6 +72,7 @@ public class BinSearchTreeTest {
      */
     @Test
     public void testToLSF() {
+        System.out.println("toLSF");
         assertEquals(tree.toLSF(), "19(4(*,7(7,*)),21)");
     }
     private BinSearchTree tree;

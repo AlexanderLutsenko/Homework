@@ -21,8 +21,8 @@ public class ComputerNetwork {
         System.out.println("Компьютерная сеть запущена");
     }
 
-    public void infectComp(int infComp) { 
-        computers[infComp].isInfected = true;        
+    public void infectComp(int infComp) {
+        computers[infComp].isInfected = true;
         System.out.println("Компьютер " + infComp + " подхватил вирус из интернета!");
     }
 
@@ -57,8 +57,20 @@ public class ComputerNetwork {
         this.securityRanks = securityRanks;
     }
 
-    private class Computer {
+    public Computer[] getComputers() {
+        return computers;
+    }
 
+    public class Computer {
+
+        public String getOS() {
+            return os;
+        }
+
+        public boolean isInfected(){
+            return isInfected;
+        }
+        
         void init(String os, boolean[][] matrix, int id) {
             this.os = os;
             this.id = id;
