@@ -21,7 +21,15 @@ public class Graph {
 
     public boolean isSolvable() {
 
-        nodes[0].consider(this);
+        for (Node node : nodes) {
+            if (node.getRobotCount() == 1) {
+                if (node.isPainted()) {
+                    paintedRobots++;
+                } else {
+                    unpaintedRobots++;
+                }
+            }
+        }
 
         if (paintedRobots != 1 && unpaintedRobots != 1) {
             return true;
@@ -30,16 +38,8 @@ public class Graph {
         }
     }
 
-    public Node[] getNodes(){
+    public Node[] getNodes() {
         return nodes;
-    }
-    
-    void paintedInc() {
-        paintedRobots++;
-    }
-
-    void unpaintedInc() {
-        unpaintedRobots++;
     }
     private Node[] nodes;
     private int paintedRobots = 0;
@@ -61,7 +61,7 @@ class Node {
 
     public void mark() {
         for (Node node : connections) {
-                node.draw();
+            node.draw();
         }
     }
 
@@ -75,47 +75,23 @@ class Node {
         }
     }
 
-    public void consider(Graph graph) {
-        isCounted = true;
-
-        if (robotCount > 1) {
-            robotCount = 0;
-        }
-
-        if (robotCount > 0) {
-            if (isPainted) {
-                graph.paintedInc();
-            } else {
-                graph.unpaintedInc();
-            }
-        }
-
-        for (Node node : connections) {
-            if (!node.isCounted) {
-                node.consider(graph);
-            }
-        }
-    }
-
-    public boolean isPainted(){
+    public boolean isPainted() {
         return isPainted;
     }
-    
-    public int getRobotCount(){
+
+    public int getRobotCount() {
         return robotCount;
     }
-    
-    public boolean isConnectedWith(Node node){
+
+    public boolean isConnectedWith(Node node) {
         return connections.contains(node);
     }
-    
+
     private void setPainted() {
         isPainted = true;
     }
-    
     private int robotCount;
     private LinkedList<Node> connections;
     private boolean isPainted;
     private boolean isActive;
-    private boolean isCounted;
 }

@@ -10,11 +10,11 @@ public class Robots {
 
     public static void main(String[] args) {
         readData("input.txt");
-        
+
         Graph graph = createGraph();
         graph.draw();
-        
-        if (graph.isSolvable()){
+
+        if (graph.isSolvable()) {
             System.out.println("Можно уничтожить всех роботов");
         } else {
             System.out.println("Всех роботов уничтожить нельзя");
@@ -26,7 +26,7 @@ public class Robots {
         try {
             Scanner scan = new Scanner(input);
             String str = scan.nextLine();
-            StringTokenizer tokenizer = new StringTokenizer(str);            
+            StringTokenizer tokenizer = new StringTokenizer(str);
             nodeCount = tokenizer.countTokens();
             robots = new int[nodeCount];
             adjMatrix = new boolean[nodeCount][nodeCount];
@@ -50,18 +50,15 @@ public class Robots {
             System.exit(0);
         }
     }
-    
-    public static Graph createGraph(){
+
+    public static Graph createGraph() {
         return new Graph(nodeCount, adjMatrix, robots);
     }
-    
+
     private static boolean convertToBoolean(int number) {
         return number != 0;
     }
-    
     private static int[] robots;
     private static boolean[][] adjMatrix;
     private static int nodeCount;
 }
-
-
