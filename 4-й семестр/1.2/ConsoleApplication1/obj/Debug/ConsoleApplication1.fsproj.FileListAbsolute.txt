@@ -1,0 +1,9 @@
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe.config
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\bin\Debug\ConsoleApplication1.XML
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\bin\Debug\FSharp.Core.dll
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\bin\Debug\FSharp.Core.xml
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\bin\Debug\ru\FSharp.Core.resources.dll
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+C:\Users\Саня\Desktop\Homework\4-й семестр\1.2\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb
