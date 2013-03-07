@@ -7,11 +7,9 @@ let primeNumerals = Seq.initInfinite (fun index ->
     let rec findPrime index current acc = 
         if acc = index then current-1
         else
-            if isPrime current then 
-                let acc = acc+1
-                findPrime index (current+1) acc
+            if isPrime current then findPrime index (current+1) (acc+1)
             else findPrime index (current+1) acc
     findPrime (index+1) 2 0
     )
 
-Seq.take 30 primeNumerals |> Seq.iter (printf "%A ")
+Seq.take 1000 primeNumerals |> Seq.iter (printf "%A ")
