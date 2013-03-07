@@ -3,7 +3,7 @@
         i > int(Operators.sqrt(float(n))) || (n % i <> 0 && check (i + 1))
     check 2
 
-let primeNumerals = Seq.initInfinite (fun index ->
+let primeNumbers = Seq.initInfinite (fun index ->
     let rec findPrime index current acc = 
         if acc = index then current-1
         else
@@ -12,4 +12,4 @@ let primeNumerals = Seq.initInfinite (fun index ->
     findPrime (index+1) 2 0
     )
 
-Seq.take 1000 primeNumerals |> Seq.iter (printf "%A ")
+Seq.take 1000 primeNumbers |> Seq.iter (printf "%A ")
