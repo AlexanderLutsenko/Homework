@@ -19,6 +19,7 @@ let solveTree tree =
 
 let tree1 = Operation('+', Operation('/', Number(3.), Number(6.)), Number(1.))
 let tree2 = Operation('*', Number(5.), Number(7.))
+let tree3 = Number(13.)
 let tree4 = Operation('+', Operation('?', Number(3.), Number(6.)), Number(1.))
 
 printfn "%A" (solveTree tree1)
