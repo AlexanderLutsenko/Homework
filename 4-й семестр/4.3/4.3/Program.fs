@@ -7,7 +7,6 @@ let add data =
     let name = Console.ReadLine()
     printf "%s" "Введите номер телефона: "
     let phone = Console.ReadLine()
-
     let data = (name, phone)::data
     printf "%s" "Данные добавлены в базу"
     data
@@ -47,17 +46,13 @@ let rec menu data =
 3 - найти имя по телефону
 4 - сохранить текущие данные в файл
 5 - считать данные из файла"
-
     let command = Console.ReadKey()
-
     match command with 
     | c when (c.Key = ConsoleKey.D0) -> ignore
     | c ->
         let data = 
             Console.Clear()
             match c.Key with
-            | ConsoleKey.D0 -> Console.Beep()
-                               data
             | ConsoleKey.D1 -> add data 
             | ConsoleKey.D2 -> findByName data
                                data
