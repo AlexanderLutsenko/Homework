@@ -1,0 +1,10 @@
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\bin\Debug\_4.3.exe.config
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\bin\Debug\_4.3.XML
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\bin\Debug\_4.3.exe
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\bin\Debug\_4.3.pdb
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\bin\Debug\FSharp.Core.dll
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\bin\Debug\FSharp.Core.xml
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\bin\Debug\ru\FSharp.Core.resources.dll
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\obj\Debug\4.3.fsprojResolveAssemblyReference.cache
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\obj\Debug\_4.3.exe
+C:\Users\Саня\Desktop\Homework\4-й семестр\4.3\4.3\obj\Debug\_4.3.pdb
