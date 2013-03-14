@@ -23,22 +23,22 @@ let findByPhone data =
     let data = List.filter (fun x -> snd x = phone) data
     List.map(fun x -> printfn "%s" (fst x)) data |> ignore
 
-let save data =     
-    let fsOut = new FileStream("DataBase.dat", FileMode.Create)
+let save data source =     
+    let fsOut = new FileStream(source, FileMode.Create)
     let formatter = new BinaryFormatter()
     formatter.Serialize(fsOut, box data)
     fsOut.Close()
     printf "%s" "Данные сохранены"
 
-let load data =
-    let fsIn = new FileStream("DataBase.dat", FileMode.Open)
+let load data source =
+    let fsIn = new FileStream(source, FileMode.Open)
     let formatter = new BinaryFormatter()
     let res = unbox (formatter.Deserialize(fsIn))
     fsIn.Close()
     printf "%s" "Данные считаны"
     res
 
-let rec menu data = 
+let rec menu data source = 
     printfn "%s" "
 0 - выйти
 1 - добавить запись
@@ -58,10 +58,10 @@ let rec menu data =
                                data
             | ConsoleKey.D3 -> findByPhone data
                                data
-            | ConsoleKey.D4 -> save data
+            | ConsoleKey.D4 -> save data source
                                data
-            | ConsoleKey.D5 -> load data
+            | ConsoleKey.D5 -> load data source
             | _ -> data
-        menu data
+        menu data source
 
-menu [] ignore
+menu [] "DataBase.dat" ignore
