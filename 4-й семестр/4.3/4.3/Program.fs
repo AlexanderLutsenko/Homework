@@ -13,7 +13,7 @@ let add data =
 
 let findByName data = 
     printf "%s" "Введите имя: "
-    let name :string = Console.ReadLine()
+    let name = Console.ReadLine()
     let data = List.filter (fun x -> fst x = name) data
     List.map(fun x -> printfn "%s" (snd x)) data |> ignore
 
