@@ -30,7 +30,7 @@ let save data source =
     fsOut.Close()
     printf "%s" "Данные сохранены"
 
-let load data source =
+let load source =
     let fsIn = new FileStream(source, FileMode.Open)
     let formatter = new BinaryFormatter()
     let res = unbox (formatter.Deserialize(fsIn))
@@ -60,7 +60,7 @@ let rec menu data source =
                                data
             | ConsoleKey.D4 -> save data source
                                data
-            | ConsoleKey.D5 -> load data source
+            | ConsoleKey.D5 -> load source
             | _ -> data
         menu data source
 
