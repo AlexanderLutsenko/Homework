@@ -2,9 +2,9 @@
     let sortedList = List.sort list
     let rec check list = 
         match list with
-        | h1::h2::tl -> 
+        | h1 :: h2 :: tl -> 
             if h1 = h2 then false
-            else check (h2::tl)
+            else check (h2 :: tl)
         | _ -> true
     check sortedList
         

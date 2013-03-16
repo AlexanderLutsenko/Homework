@@ -7,7 +7,7 @@ let add data =
     let name = Console.ReadLine()
     printf "%s" "Введите номер телефона: "
     let phone = Console.ReadLine()
-    let data = (name, phone)::data
+    let data = (name, phone) :: data
     printf "%s" "Данные добавлены в базу"
     data
 
@@ -15,7 +15,7 @@ let findByName data =
     printf "%s" "Введите имя: "
     let name = Console.ReadLine()
     let data = List.filter (fun x -> fst x = name) data
-    List.map(fun x -> printfn "%s" (snd x)) data |> ignore
+    List.map (fun x -> printfn "%s" (snd x)) data |> ignore
 
 let findByPhone data = 
     printf "%s" "Введите номер телефона: "

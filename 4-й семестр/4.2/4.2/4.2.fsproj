@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>40a46b6f-c320-4ad6-b829-254127aa1536</ProjectGuid>
+    <ProjectGuid>6ebd8d7e-f14e-4c9b-b6a6-f03c0b4afc4d</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>_4.2</RootNamespace>
     <AssemblyName>_4.2</AssemblyName>
