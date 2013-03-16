@@ -4,8 +4,8 @@
     check 2
 
 let rec findPrime n =
-    if isPrime n then Some (n, n+1)
-    else findPrime (n+1)
+    if isPrime n then Some (n, n + 1)
+    else findPrime (n + 1)
 
 let primeNumbers = Seq.unfold (fun n -> findPrime n) 2
 
