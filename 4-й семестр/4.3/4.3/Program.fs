@@ -21,22 +21,30 @@ let findByPhone data =
     printf "%s" "Введите номер телефона: "
     let phone = Console.ReadLine()
     let data = List.filter (fun x -> snd x = phone) data
-    List.map(fun x -> printfn "%s" (fst x)) data |> ignore
+    List.map (fun x -> printfn "%s" (fst x)) data |> ignore
 
-let save data source =     
-    let fsOut = new FileStream(source, FileMode.Create)
-    let formatter = new BinaryFormatter()
-    formatter.Serialize(fsOut, box data)
-    fsOut.Close()
-    printf "%s" "Данные сохранены"
+let save data source =    
+    try 
+        let fsOut = new FileStream(source, FileMode.Create)
+        let formatter = new BinaryFormatter()
+        formatter.Serialize(fsOut, box data)
+        fsOut.Close()
+        printf "%s" "Данные сохранены"
+    with | _ ->
+        printf "%s" "Сохранить данные не удалось"
+        
 
 let load source =
-    let fsIn = new FileStream(source, FileMode.Open)
-    let formatter = new BinaryFormatter()
-    let res = unbox (formatter.Deserialize(fsIn))
-    fsIn.Close()
-    printf "%s" "Данные считаны"
-    res
+    try
+        let fsIn = new FileStream(source, FileMode.Open)
+        let formatter = new BinaryFormatter()
+        let res = unbox (formatter.Deserialize(fsIn))
+        fsIn.Close()
+        printf "%s" "Данные считаны"
+        res
+    with | _ -> 
+        printf "%s" "База данных не существует или не может быть прочитана"
+        []                     
 
 let rec menu data source = 
     printfn "%s" "

@@ -22,7 +22,7 @@ let checkString (str:String) =
                     | (')' | ']' | '}') -> None
                     | _ -> stack
             if stack = None then false
-            else check str sLength (index+1) stack               
+            else check str sLength (index + 1) stack               
         else 
             match stack with
             | Some [] -> true
