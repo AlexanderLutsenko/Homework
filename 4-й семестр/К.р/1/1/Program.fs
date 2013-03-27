@@ -1,2 +1,2 @@
-﻿let m list = List.collect (fun x -> [x; x]) list
-printfn "%A" (m [1.; 2.; 3.])
+﻿let supermap list func = List.collect (func) list
+printfn "%A" (supermap [1.; 2.; 3.] (fun x -> [sin x; cos x]))
