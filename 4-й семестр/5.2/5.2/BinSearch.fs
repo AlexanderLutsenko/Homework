@@ -98,7 +98,7 @@ let main =
     let input = (Console.ReadLine()).Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
     let inputList = List.map (fun c -> double c) (Array.toList input)
     let tree = BinSearchTree<double> inputList
-    printfn "%A" (tree.ToString())
+    printfn "%s" (tree.ToString())
     printfn "%A" tree
 
     let enum = (tree :> IEnumerable<_>).GetEnumerator()
