@@ -102,8 +102,6 @@ let main =
     printfn "%A" tree
 
     let enum = (tree :> IEnumerable<_>).GetEnumerator()
-    enum.MoveNext() |> ignore
-    let a = enum.Current
 
     for elem in tree do
         printfn "%A" elem

@@ -7,7 +7,7 @@ let mutable compl = false
 
 for i in 0 .. 99 do      
     let worker = new BackgroundWorker()
-    worker.DoWork.Add(fun args -> for j in 0..9999 do result <- result + array.[i * 100 + j])
+    worker.DoWork.Add(fun args -> for j in 0..9999 do result <- result + array.[i * 10000 + j])
     worker.RunWorkerCompleted.Add(fun args -> completed.[i] <- true)
     worker.RunWorkerAsync()
 
