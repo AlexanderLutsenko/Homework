@@ -1,12 +1,13 @@
 ﻿open System
+open System.Collections.Generic
 open System.Collections
 
 exception EnumeratorException of string
 
-type Element (value : IComparable) =
+type Element<'c> (value : 'c) =
     let mutable m_value = value
-    let mutable m_left = None
-    let mutable m_right = None
+    let mutable m_left : Element<'c> option = None
+    let mutable m_right : Element<'c> option = None
     member this.Value = m_value
     member this.Left
         with get() = m_left
@@ -15,15 +16,16 @@ type Element (value : IComparable) =
         with get() = m_right
         and set elem = m_right <- elem
 
-type TreeEnumerator (tree : Element option) as this = 
-    let mutable m_stack : Element option list = []
-    let mutable m_current = null
-    do (this :> IEnumerator).Reset()
-    interface IEnumerator with  
+type TreeEnumerator<'c> (tree : Element<'c> option) as this = 
+    let mutable m_stack : Element<'c> option list = []
+    let mutable m_current = None
+    do (this :> IEnumerator<'c>).Reset()
+    interface IEnumerator<'c> with  
         member this.Current = 
             match m_current with
-            | null -> raise (EnumeratorException "Element pointer out of range")
-            | _ -> m_current :> obj     
+            | None -> raise (EnumeratorException "Element pointer out of range")
+            | Some(value) -> value
+        member this.Current = box (this :> IEnumerator<'c>).Current        
         member this.MoveNext() = 
             match m_stack with                                                       
             | hd :: tl -> 
@@ -35,73 +37,77 @@ type TreeEnumerator (tree : Element option) as this =
                 m_stack <-
                     if cur.Left <> None then cur.Left :: m_stack
                     else m_stack
-                m_current <- cur.Value
+                m_current <- Some cur.Value
                 true
             | [] -> 
-                m_current <- null
+                m_current <- None
                 false
         member this.Reset() = 
             m_stack <- 
-                m_current <- null
+                m_current <- None
                 match tree with
                 | None -> []
-                | _ -> [tree]     
+                | _ -> [tree] 
+        member this.Dispose() = ()    
 
-type BinSearchTree<'c when 'c :> IComparable> (values : 'c list) as this =
+type BinSearchTree<'c when 'c : comparison> (values : 'c list) as this =
     let mutable m_root = None
     do List.iter (fun value -> this.AddElement value) values  
              
-    member this.AddElement (value : 'c) =
+    member this.AddElement value =
         match m_root with
         | None -> m_root <- Some(Element value)
         | Some(_) -> 
-            let rec add (node : Element option) (value : 'c) = 
-                match value.CompareTo (node.Value.Value)  with
-                | x when x < 0 -> 
+            let rec add (node : Element<'c> option) value = 
+                if value < node.Value.Value then
                     if node.Value.Left = None then node.Value.Left <- Some(Element value) 
                     else add node.Value.Left value
-                | _ -> 
+                else
                     if node.Value.Right = None then node.Value.Right <- Some(Element value)
                     else add node.Value.Right value
             add m_root value
 
-    member this.IsExists (value : 'c) = 
-        let rec isEx (node : Element option) value = 
+    member this.IsExists value = 
+        let rec isEx (node : Element<'c> option) value = 
             match node with
             | None -> false
             | Some(elem) when value = elem.Value  -> true
             | Some(elem) when value < elem.Value -> isEx elem.Left value
             | Some(elem) -> isEx elem.Right value
-        isEx m_root value
+        isEx m_root value 
 
     override this.ToString() =
-        let rec LSF (node : Element option) =
+        let rec LSF (node : Element<'c> option) =
             match node with
             | None -> "*"
             | Some(elem) -> 
                 if elem.Left <> None || elem.Right <> None then
-                    string elem.Value + "(" + LSF elem.Left + "," + LSF elem.Right + ")"
-                else string elem.Value
-        LSF m_root
+                    elem.Value.ToString() + "(" + LSF elem.Left + "," + LSF elem.Right + ")"
+                else elem.Value.ToString()
+        LSF m_root 
 
-    interface IEnumerable with
-        member this.GetEnumerator() = new TreeEnumerator(m_root) :> IEnumerator
+    interface IEnumerable<'c> with
+        member this.GetEnumerator() = new TreeEnumerator<'c>(m_root) :> IEnumerator<'c>
+        member this.GetEnumerator() = (this :> IEnumerable<'c>).GetEnumerator() :> IEnumerator
 
     new () = BinSearchTree []
 
 
 let main = 
     printfn "%s" "Введите элементы дерева: "
-    let input = (Console.ReadLine()).Split([|' '|])
+    let input = (Console.ReadLine()).Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
     let inputList = List.map (fun c -> double c) (Array.toList input)
-    let tree = BinSearchTree inputList
+    let tree = BinSearchTree<double> inputList
     printfn "%A" (tree.ToString())
     printfn "%A" tree
-    let enum = (tree :> IEnumerable).GetEnumerator()
+
+    let enum = (tree :> IEnumerable<_>).GetEnumerator()
+    enum.MoveNext() |> ignore
+    let a = enum.Current
 
     for elem in tree do
         printfn "%A" elem
-
+    
     Console.ReadLine() |> ignore
     
-main
+main 
