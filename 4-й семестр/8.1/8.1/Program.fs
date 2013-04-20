@@ -26,9 +26,9 @@ let getHtml (uri : Uri) =
 
 let getLinks uri = 
     let html = getHtml uri |> Async.RunSynchronously 
-    //let hrefRegex = new Regex("(?<=<(a href|a .*? href)=\")http://.+?(?=(#.*?)?\".*?>)")
+    //let hrefRegex = new Regex("(?<=<a href=\")http://[^\"<>]+(?=\">)")
     //Включая относительные ссылки и игнорируя якори
-    let hrefRegex = new Regex("(?<=<(a href|a .*? href)=\").+?(?=(#.*?)?\".*?>)")
+    let hrefRegex = new Regex("(?<=<(a href|a [^<>]*? href)=\")[^#\"<>]*(?=(#.[^\"<>]*)?\"[^<>]*>)")
 
     let matches = hrefRegex.Matches html
     let hrefs = [for i in 0 .. matches.Count - 1 -> (matches.[i]).Value]
@@ -40,7 +40,7 @@ let getLinks uri =
                 else addr
             uri.AbsoluteUri + addr
     let uries = List.map (fun (addr : string) -> Uri (createAddress addr)) hrefs    
-    let uries = List.filter (fun (link : Uri) -> if compare link uri <> 0 then true else false) (removeDuplicates uries)   
+    let uries = List.filter (fun (link : Uri) -> if compare link uri <> 0 then true else false) (removeDuplicates uries)
     printfn "Обнаружено ссылок - %i, из них уникальных - %i" hrefs.Length uries.Length    
     uries
     
