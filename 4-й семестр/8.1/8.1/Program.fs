@@ -33,38 +33,50 @@ let getLinks uri =
     let matches = hrefRegex.Matches html
     let hrefs = [for i in 0 .. matches.Count - 1 -> (matches.[i]).Value]
     let createAddress (addr : string) = 
-        if addr.StartsWith "http://" then addr 
+        if addr.StartsWith "http://" || addr.StartsWith "https://" || addr.StartsWith "ftp://" || addr.StartsWith "ftps://" then addr 
         else 
-            let addr = 
-                if addr.StartsWith "/" then addr.Substring 1
-                else addr
-            uri.AbsoluteUri + addr
+            if addr.StartsWith "//" then uri.Scheme + ":" + addr
+            else if addr.StartsWith "/" then uri.Scheme + "://" + uri.Host + addr
+            else uri.AbsoluteUri + addr
     let uries = List.map (fun (addr : string) -> Uri (createAddress addr)) hrefs    
-    let uries = List.filter (fun (link : Uri) -> if compare link uri <> 0 then true else false) (removeDuplicates uries)
+    let uries = removeDuplicates uries
+
     printfn "Обнаружено ссылок - %i, из них уникальных - %i" hrefs.Length uries.Length    
     uries
     
-let countCharacters uri lockObj = 
+let countCharacters (uri : Uri) lockObj = 
     async {
-        let! html = getHtml(uri)
-        let address = uri.AbsoluteUri
-        let charNumber = html.Length
-        Monitor.Enter lockObj
-        printfn "%s --- %i" address charNumber
-        Monitor.Exit lockObj
+        try 
+            let! html = getHtml(uri)
+            let address = uri.AbsoluteUri
+            let charNumber = html.Length
+            Monitor.Enter lockObj
+            printfn "%s --- %i" address charNumber
+            Monitor.Exit lockObj
+        with
+        | exc -> 
+            Monitor.Enter lockObj
+            printfn "%s --- Подключиться не удалось" uri.AbsoluteUri
+            Monitor.Exit lockObj
     }  
 
 let main = 
-    printf "Введите адрес страницы: "
-    let address = 
-        let addr = Console.ReadLine()
-        if not (addr.StartsWith "http://") then
-            "http://" + addr
-        else addr
-    let lockObj = new Object()
-    let links = getLinks(Uri (address, UriKind.RelativeOrAbsolute))
-    let tasks = List.map (fun link -> countCharacters link lockObj) links
-    tasks |> Async.Parallel |> Async.RunSynchronously |> ignore
+    try 
+        printf "Введите адрес страницы: "
+        let address = 
+            let addr = Console.ReadLine()
+            if not (addr.StartsWith "http://" || addr.StartsWith "https://" || addr.StartsWith "ftp://" || addr.StartsWith "ftps://") then
+                "http://" + addr
+            else addr
+        let lockObj = new Object()
+        let links = getLinks(Uri address)
+        let tasks = List.map (fun link -> countCharacters link lockObj) links
+        tasks |> Async.Parallel |> Async.RunSynchronously |> ignore        
+    with
+    | :? WebException -> 
+        printfn "Подключиться не удалось"
+    | exc -> 
+        printfn "Произошло что-то ужасное"
+        raise exc
     Console.Read() |> ignore
-
 main
